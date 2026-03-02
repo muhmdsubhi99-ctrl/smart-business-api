@@ -156,7 +156,6 @@ def calculate_compensation(employee_id: int, db: Session = Depends(get_db)):
     employee = db.query(Employee).filter(Employee.id == employee_id).first()
     settings = db.query(CompensationSettings).filter(CompensationSettings.company_id == employee.company_id).first()
     if not settings:
-        # default weights if none set
         settings = CompensationSettings(strategic_weight=10, financial_weight=15, performance_weight=10, skills_weight=5)
     total = employee.base_salary + \
             (employee.base_salary * settings.strategic_weight / 100) + \
